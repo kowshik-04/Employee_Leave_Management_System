@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}s
+<head>
+    <title>Employee leave management system | Login Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <meta name="description" content="Responsive Admin Dashboard Template" />
+    <meta name="keywords" content="admin,dashboard" />
+    <meta name="author" content="KLU CODERS" />
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Styles -->
+    <link type="text/css" rel="stylesheet" href="{% static 'assets/plugins/materialize/css/materialize.min.css' %}"/>
+    <link href="{% static 'assets/plugins/material-preloader/css/materialPreloader.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/alpha.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"/>
+
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <!-- Custom Styles -->
+    <style>
+        .card {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .input-field {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .input-field i.material-icons {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .signin-btn {
+            margin-top: 20px;
+        }
+        .captcha-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .captcha-box {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #00796b;
+            border-radius: 5px;
+            background-color: #b2dfdb;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="signin-page">
+
+    <div class="mn-content valign-wrapper">
+        <main class="mn-inner container">
+            <h4 align="center"><a href="../index.php">Employee Leave Management System | Login Page</a></h4>
+            <div class="valign">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card white darken-1">
+                            <div class="card-content">
+                                <span class="card-title">Sign In</span>
+                                <div class="row">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            {% if message.tags == 'error' %}
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                    {{message}}
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    <form id="loginForm" class="col s12" action="{% url 'doLogin' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="input-field col s12">
+                                            <input id="username" type="email" name="email" class="validate" required="true">
+                                            <label for="email">Email</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input id="password" type="password" class="validate" name="password" required="true">
+                                            <label for="password">Password</label>
+                                            <i class="material-icons" onclick="togglePasswordVisibility()">visibility_off</i>
+                                        </div>
+                                        <!-- CAPTCHA Field -->
+                                        <div class="input-field col s12">
+                                            <div class="captcha-container">
+                                                <div class="captcha-box" id="captcha"></div>
+                                                <input id="captchaInput" type="text" class="validate" name="captcha" required="true">
+                                                <label for="captchaInput">Enter CAPTCHA</label>
+                                            </div>
+                                        </div>
+                                        <div class="col s6">
+                                            <button class="btn waves-effect waves-light teal signin-btn" type="button" onclick="validateCaptcha()">Sign In</button>
+                                        </div>
+                                        <div class="col s6">
+                                            <a href="{% url 'firstpage' %}" class="btn waves-effect waves-light teal signin-btn">Home Page</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Javascripts -->
+    <script src="{% static 'assets/plugins/jquery/jquery-2.2.0.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/materialize/js/materialize.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/material-preloader/js/materialPreloader.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/jquery-blockui/jquery.blockui.js' %}"></script>
+    <script src="{% static 'assets/js/alpha.min.js' %}"></script>
+
+    <!-- JavaScript for generating alphanumeric CAPTCHA -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            generateCaptcha();
+        });
+
+        function generateCaptcha() {
+            var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            var captcha = '';
+            for (var i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captcha').innerText = captcha;
+        }
+
+        function validateCaptcha() {
+            var enteredCaptcha = document.getElementById('captchaInput').value;
+            var generatedCaptcha = document.getElementById('captcha').innerText;
+            if (enteredCaptcha.toLowerCase() === generatedCaptcha.toLowerCase()) {
+                document.getElementById('loginForm').submit();
+            } else {
+                alert('CAPTCHA is incorrect. Please try again.');
+                generateCaptcha(); // Regenerate CAPTCHA
+            }
+        }
+
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('password');
+            var icon = document.querySelector('.input-field i.material-icons');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.textContent = 'visibility';
+            } else {
+                passwordInput.type = 'password';
+                icon.textContent = 'visibility_off';
+            }
+        }
+    </script>
+
+</body>
+</html>

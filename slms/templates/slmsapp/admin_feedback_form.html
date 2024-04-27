@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Admin Feedback Form</h2>
+   <form method="post">
+    {% csrf_token %}
+    <label for="employee">Select Employee:</label>
+    <select name="employee" id="employee">
+        {% for employee in staff %}
+            <option>{{ employee.username }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="feedback">Feedback:</label><br>
+    <textarea name="feedback" id="feedback" cols="30" rows="10"></textarea><br>
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+</form>
+</div>
+{% endblock %}
