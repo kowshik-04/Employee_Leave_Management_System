@@ -44,7 +44,8 @@ Follow the steps below to set up and run the project:
     Open a web browser and go to `http://127.0.0.1:8000/` to access the application.
 
 ## Contributors
-- [Your Name](https://github.com/yourusername)
+- [Prasad](https://github.com/prasadgullapalli)
+- [Kowshik](https://github.com/kowshik04)
 
 Feel free to contribute to the project by forking it and submitting pull requests.
 
