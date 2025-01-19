@@ -47,5 +47,4 @@ Follow the steps below to set up and run the project:
 - [Prasad](https://github.com/prasadgullapalli)
 - [Kowshik](https://github.com/kowshik04)
 
-Feel free to contribute to the project by forking it and submitting pull requests.
 
