@@ -43,8 +43,4 @@ Follow the steps below to set up and run the project:
 7. **Access the Web Server:**
     Open a web browser and go to `http://127.0.0.1:8000/` to access the application.
 
-## Contributors
-- [Prasad](https://github.com/prasadgullapalli)
-- [Kowshik](https://github.com/kowshik04)
-
 
